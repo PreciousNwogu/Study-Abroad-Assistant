@@ -81,45 +81,50 @@ export default function HomePage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex flex-col">
       <Header />
-      <main className="container mx-auto px-4 py-8 flex-grow">
+      <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 flex-grow">
         <div className="max-w-7xl mx-auto mb-8">
-          {/* Added margin bottom for footer spacing */}
-          {/* Hero Section */}
-          <div className="text-center mb-12">
-            <div className="flex items-center justify-center gap-4 mb-6">
+          {/* Hero Section - Mobile Optimized */}
+          <div className="text-center mb-8 sm:mb-12">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
               <div className="relative">
-                <div className="w-20 h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
-                  <Bot className="h-10 w-10 text-white" />
+                <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-full flex items-center justify-center shadow-lg">
+                  <Bot className="h-8 w-8 sm:h-10 sm:w-10 text-white" />
                 </div>
                 <div className="absolute -bottom-2 -right-2 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
                   <MessageCircle className="h-3 w-3 text-white" />
                 </div>
               </div>
-              <div>
-                <h1 className="text-5xl font-bold text-gray-900 mb-2">
+              <div className="text-center sm:text-left">
+                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
                   Study Abroad Assistant 🎓
                 </h1>
-                <p className="text-xl text-gray-600">
+                <p className="text-lg sm:text-xl text-gray-600">
                   Level-Specific Guidance for Canada & UK
                 </p>
               </div>
             </div>
-            <p className="text-lg text-gray-500 max-w-3xl mx-auto mb-8">
+            <p className="text-base sm:text-lg text-gray-500 max-w-3xl mx-auto mb-6 sm:mb-8 px-4">
               Get personalized requirements, SOPs, and application assistance
               tailored to your specific study level and destination country
             </p>
           </div>
 
-          {/* Main Content Tabs */}
+          {/* Main Content Tabs - Mobile Optimized */}
           <Tabs
             value={activeTab}
             onValueChange={setActiveTab}
-            className="space-y-8"
+            className="space-y-6 sm:space-y-8"
           >
-            <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto">
-              <TabsTrigger value="requirements">Requirements</TabsTrigger>
-              <TabsTrigger value="chat">AI Assistant</TabsTrigger>
-              <TabsTrigger value="services">Services</TabsTrigger>
+            <TabsList className="grid w-full grid-cols-3 max-w-md mx-auto h-12">
+              <TabsTrigger value="requirements" className="text-xs sm:text-sm">
+                Requirements
+              </TabsTrigger>
+              <TabsTrigger value="chat" className="text-xs sm:text-sm">
+                AI Assistant
+              </TabsTrigger>
+              <TabsTrigger value="services" className="text-xs sm:text-sm">
+                Services
+              </TabsTrigger>
             </TabsList>
 
             {/* Requirements Tab */}
@@ -130,60 +135,56 @@ export default function HomePage() {
               />
             </TabsContent>
 
-            {/* Chat Tab */}
+            {/* Chat Tab - Mobile Optimized */}
             <TabsContent value="chat">
-              <div className="grid lg:grid-cols-3 gap-8">
+              <div className="grid lg:grid-cols-3 gap-6 lg:gap-8">
                 <div className="lg:col-span-2">
-                  <Card className="h-[550px]">
-                    {" "}
-                    {/* Reduced height */}
-                    <CardHeader>
-                      <CardTitle className="flex items-center gap-2">
+                  <Card className="h-[450px] sm:h-[550px]">
+                    <CardHeader className="pb-3">
+                      <CardTitle className="flex items-center gap-2 text-lg sm:text-xl">
                         <Bot className="h-5 w-5 text-blue-600" />
                         Study Abroad Assistant
                       </CardTitle>
-                      <CardDescription>
+                      <CardDescription className="text-sm">
                         Chat with our AI assistant for personalized guidance
                       </CardDescription>
                     </CardHeader>
-                    <CardContent className="h-[450px]">
-                      {" "}
-                      {/* Adjusted content height */}
+                    <CardContent className="h-[350px] sm:h-[450px] p-3 sm:p-6">
                       <ChatInterface />
                     </CardContent>
                   </Card>
                 </div>
 
-                {/* Chat Side Panel */}
-                <div className="space-y-6">
+                {/* Chat Side Panel - Mobile Responsive */}
+                <div className="space-y-4 sm:space-y-6 order-first lg:order-last">
                   <Card>
-                    <CardHeader>
-                      <CardTitle className="text-xl">AI Features</CardTitle>
+                    <CardHeader className="pb-3">
+                      <CardTitle className="text-lg sm:text-xl">AI Features</CardTitle>
                     </CardHeader>
-                    <CardContent className="space-y-4">
+                    <CardContent className="space-y-3 sm:space-y-4">
                       <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium">Smart Matching</h4>
-                          <p className="text-sm text-gray-600">
+                          <h4 className="font-medium text-sm sm:text-base">Smart Matching</h4>
+                          <p className="text-xs sm:text-sm text-gray-600">
                             University recommendations based on your profile
                           </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium">Document Guidance</h4>
-                          <p className="text-sm text-gray-600">
+                          <h4 className="font-medium text-sm sm:text-base">Document Guidance</h4>
+                          <p className="text-xs sm:text-sm text-gray-600">
                             Step-by-step document preparation
                           </p>
                         </div>
                       </div>
                       <div className="flex items-start gap-3">
-                        <CheckCircle className="h-5 w-5 text-green-500 mt-0.5" />
+                        <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium">Real-time Support</h4>
-                          <p className="text-sm text-gray-600">
+                          <h4 className="font-medium text-sm sm:text-base">Real-time Support</h4>
+                          <p className="text-xs sm:text-sm text-gray-600">
                             Instant answers to your questions
                           </p>
                         </div>
