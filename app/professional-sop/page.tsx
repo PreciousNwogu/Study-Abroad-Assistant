@@ -1,6 +1,11 @@
 "use client";
 
+import { Suspense } from "react";
 import { ProfessionalSOPForm } from "@/components/professional-sop-form";
+
+function ProfessionalSOPFormWrapper({ onSubmit }: { onSubmit: (data: any) => void }) {
+  return <ProfessionalSOPForm onSubmit={onSubmit} />;
+}
 
 export default function ProfessionalSOPPage() {
   const handleFormSubmit = (data: any) => {
@@ -25,7 +30,9 @@ export default function ProfessionalSOPPage() {
             </p>
           </div>
 
-          <ProfessionalSOPForm onSubmit={handleFormSubmit} />
+          <Suspense fallback={<div className="text-center">Loading form...</div>}>
+            <ProfessionalSOPFormWrapper onSubmit={handleFormSubmit} />
+          </Suspense>
         </div>
       </div>
     </div>
