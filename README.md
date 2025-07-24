@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🎓 Study Abroad Assistant
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -46,7 +47,7 @@
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/yourusername/study-abroad-assistant.git
+git clone https://github.com/PreciousNwogu/study-abroad-assistant.git
 cd study-abroad-assistant
 ```
 
@@ -266,7 +267,7 @@ study-abroad-assistant/
 
 ### Vercel (Recommended)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/yourusername/study-abroad-assistant)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/PreciousNwogu/study-abroad-assistant)
 
 1. **Push to GitHub**: Commit your code to a GitHub repository
 2. **Connect to Vercel**: Import your repository in Vercel dashboard
@@ -372,8 +373,8 @@ Enable detailed logging:
 
 - 📖 **Email Setup**: See [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)
 - 🔍 **Debug**: Check console logs for error details
-- 🐛 **Issues**: [Open a GitHub issue](https://github.com/yourusername/study-abroad-assistant/issues)
-- 💬 **Discussions**: [GitHub Discussions](https://github.com/yourusername/study-abroad-assistant/discussions)
+- 🐛 **Issues**: [Open a GitHub issue](https://github.com/PreciousNwogu/study-abroad-assistant/issues)
+- 💬 **Discussions**: [GitHub Discussions](https://github.com/PreciousNwogu/study-abroad-assistant/discussions)
 
 ## 🤝 Contributing
 
@@ -442,9 +443,9 @@ SOFTWARE.
 | Resource                | Description                                                                                                        |
 | ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
 | 📖 **Documentation**    | Check our comprehensive guides and API docs                                                                        |
-| 🐛 **Bug Reports**      | [Create an issue](https://github.com/yourusername/study-abroad-assistant/issues/new?template=bug_report.md)        |
-| 💡 **Feature Requests** | [Request a feature](https://github.com/yourusername/study-abroad-assistant/issues/new?template=feature_request.md) |
-| 💬 **Discussions**      | [Join the conversation](https://github.com/yourusername/study-abroad-assistant/discussions)                        |
+| 🐛 **Bug Reports**      | [Create an issue](https://github.com/PreciousNwogu/study-abroad-assistant/issues/new?template=bug_report.md)        |
+| 💡 **Feature Requests** | [Request a feature](https://github.com/PreciousNwogu/study-abroad-assistant/issues/new?template=feature_request.md) |
+| 💬 **Discussions**      | [Join the conversation](https://github.com/PreciousNwogu/study-abroad-assistant/discussions)                        |
 | 📧 **Email Setup Help** | See [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)                                                                   |
 
 ### Roadmap
@@ -469,10 +470,10 @@ SOFTWARE.
 
 ## 📊 Project Stats
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/study-abroad-assistant?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/study-abroad-assistant?style=social)
-![GitHub issues](https://img.shields.io/github/issues/yourusername/study-abroad-assistant)
-![GitHub pull requests](https://img.shields.io/github/issues-pr/yourusername/study-abroad-assistant)
+![GitHub stars](https://img.shields.io/github/stars/PreciousNwogu/study-abroad-assistant?style=social)
+![GitHub forks](https://img.shields.io/github/forks/PreciousNwogu/study-abroad-assistant?style=social)
+![GitHub issues](https://img.shields.io/github/issues/PreciousNwogu/study-abroad-assistant)
+![GitHub pull requests](https://img.shields.io/github/issues-pr/PreciousNwogu/study-abroad-assistant)
 
 ---
 
