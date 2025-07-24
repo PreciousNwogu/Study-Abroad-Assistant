@@ -18,17 +18,17 @@ body {
   .touch-target {
     @apply min-h-[44px] min-w-[44px];
   }
-  
+
   /* Prevent horizontal scroll on mobile */
   .mobile-container {
     @apply overflow-x-hidden;
   }
-  
+
   /* Better text selection on mobile */
   .mobile-text {
     @apply select-none sm:select-auto;
   }
-  
+
   /* Safe area padding for mobile devices */
   .safe-area-padding {
     padding-left: env(safe-area-inset-left);

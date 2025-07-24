@@ -300,7 +300,29 @@ export function ChatInterface() {
       if (data.success) {
         addMessage(
           "assistant",
-          `✅ **${completeUserData.country} University List Sent Successfully!**\n\n📧 **Sent to**: ${email}\n\n📋 **Your ${completeUserData.country} university package includes:**\n• ${completeUserData.country} university names and locations\n• Programs available in ${completeUserData.course}\n• Tuition fees within your ${completeUserData.budget} budget range\n• University contact details for direct inquiry\n• Application requirements overview\n• Downloadable PDF with detailed information\n\n📋 **Your Selection Summary:**\n• **Country**: ${getCountryWithFlag(completeUserData.country)}\n• **Course**: ${completeUserData.course}\n• **Level**: ${completeUserData.level}\n• **Budget**: ${completeUserData.budget}\n\n📥 **Check your inbox** (and spam folder)!\n\n🚀 **Ready to take the next step?**\n\nOur **Premium Service** offers much more:\n\n💎 **Professional SOP Writing ($149)**\n• Tailored for ${completeUserData.country} universities\n• Expert knowledge of ${completeUserData.country} admission requirements\n• University-specific strategy\n• 3-day delivery with revisions\n\nInterested in upgrading to our premium SOP service for your ${completeUserData.country} applications?`,
+          `✅ **${
+            completeUserData.country
+          } University List Sent Successfully!**\n\n📧 **Sent to**: ${email}\n\n📋 **Your ${
+            completeUserData.country
+          } university package includes:**\n• ${
+            completeUserData.country
+          } university names and locations\n• Programs available in ${
+            completeUserData.course
+          }\n• Tuition fees within your ${
+            completeUserData.budget
+          } budget range\n• University contact details for direct inquiry\n• Application requirements overview\n• Downloadable PDF with detailed information\n\n📋 **Your Selection Summary:**\n• **Country**: ${getCountryWithFlag(
+            completeUserData.country
+          )}\n• **Course**: ${completeUserData.course}\n• **Level**: ${
+            completeUserData.level
+          }\n• **Budget**: ${
+            completeUserData.budget
+          }\n\n📥 **Check your inbox** (and spam folder)!\n\n🚀 **Ready to take the next step?**\n\nOur **Premium Service** offers much more:\n\n💎 **Professional SOP Writing ($149)**\n• Tailored for ${
+            completeUserData.country
+          } universities\n• Expert knowledge of ${
+            completeUserData.country
+          } admission requirements\n• University-specific strategy\n• 3-day delivery with revisions\n\nInterested in upgrading to our premium SOP service for your ${
+            completeUserData.country
+          } applications?`,
           "sop_offer",
           <ProfessionalSOPOffer />
         );
@@ -333,6 +355,9 @@ export function ChatInterface() {
         <PaymentComponent
           onPaymentSuccess={handlePaymentSuccess}
           onPaymentCancel={() => setCurrentStep("sop_offer")}
+          amount={149}
+          urgency="standard"
+          deliveryFormat="pdf"
         />
       );
     } else {
@@ -729,11 +754,11 @@ export function ChatInterface() {
               <div className="bg-gray-100 rounded-lg p-2 sm:p-3">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                  <div 
+                  <div
                     className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.1s" }}
                   ></div>
-                  <div 
+                  <div
                     className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.2s" }}
                   ></div>

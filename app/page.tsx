@@ -159,13 +159,17 @@ export default function HomePage() {
                 <div className="space-y-4 sm:space-y-6 order-first lg:order-last">
                   <Card>
                     <CardHeader className="pb-3">
-                      <CardTitle className="text-lg sm:text-xl">AI Features</CardTitle>
+                      <CardTitle className="text-lg sm:text-xl">
+                        AI Features
+                      </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-3 sm:space-y-4">
                       <div className="flex items-start gap-3">
                         <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-sm sm:text-base">Smart Matching</h4>
+                          <h4 className="font-medium text-sm sm:text-base">
+                            Smart Matching
+                          </h4>
                           <p className="text-xs sm:text-sm text-gray-600">
                             University recommendations based on your profile
                           </p>
@@ -174,7 +178,9 @@ export default function HomePage() {
                       <div className="flex items-start gap-3">
                         <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-sm sm:text-base">Document Guidance</h4>
+                          <h4 className="font-medium text-sm sm:text-base">
+                            Document Guidance
+                          </h4>
                           <p className="text-xs sm:text-sm text-gray-600">
                             Step-by-step document preparation
                           </p>
@@ -183,7 +189,9 @@ export default function HomePage() {
                       <div className="flex items-start gap-3">
                         <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-500 mt-0.5 flex-shrink-0" />
                         <div>
-                          <h4 className="font-medium text-sm sm:text-base">Real-time Support</h4>
+                          <h4 className="font-medium text-sm sm:text-base">
+                            Real-time Support
+                          </h4>
                           <p className="text-xs sm:text-sm text-gray-600">
                             Instant answers to your questions
                           </p>

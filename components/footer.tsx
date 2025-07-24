@@ -5,7 +5,9 @@ export function Footer() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
           {/* Company Info */}
           <div className="text-center sm:text-left lg:col-span-1">
-            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">Study Smart AI</h3>
+            <h3 className="text-lg sm:text-xl font-bold mb-3 sm:mb-4">
+              Study Smart AI
+            </h3>
             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
               Your AI-powered study abroad assistant helping students achieve
               their dreams in Canada & UK.
@@ -14,7 +16,9 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="text-center sm:text-left">
-            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Services</h4>
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              Services
+            </h4>
             <ul className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
               <li>University Recommendations</li>
               <li>SOP Writing Assistance</li>
@@ -25,9 +29,13 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="text-center sm:text-left lg:text-right sm:col-span-2 lg:col-span-1">
-            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">Contact</h4>
+            <h4 className="text-base sm:text-lg font-semibold mb-3 sm:mb-4">
+              Contact
+            </h4>
             <div className="space-y-1 sm:space-y-2 text-gray-400 text-sm sm:text-base">
-              <p className="break-all sm:break-normal">📧 studyabroadasistant@gmail.com</p>
+              <p className="break-all sm:break-normal">
+                📧 studyabroadasistant@gmail.com
+              </p>
               <p>📱 +1 (555) 123-4567</p>
               <p>🌐 www.studysmartai.com</p>
             </div>

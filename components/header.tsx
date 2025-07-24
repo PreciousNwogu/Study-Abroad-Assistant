@@ -13,7 +13,9 @@ export function Header() {
           </div>
           <div className="hidden sm:flex items-center space-x-2 text-gray-600">
             <Globe className="h-4 w-4 sm:h-5 sm:w-5" />
-            <span className="text-sm sm:text-base">Canada & UK Education Assistant</span>
+            <span className="text-sm sm:text-base">
+              Canada & UK Education Assistant
+            </span>
           </div>
           <div className="flex sm:hidden items-center">
             <Globe className="h-4 w-4 text-blue-600" />

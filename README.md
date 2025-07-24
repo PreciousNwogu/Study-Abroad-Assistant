@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+
 # 🎓 Study Abroad Assistant
 
 [![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black?style=flat-square&logo=next.js)](https://nextjs.org/)
@@ -440,13 +441,13 @@ SOFTWARE.
 
 ### Get Help
 
-| Resource                | Description                                                                                                        |
-| ----------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| 📖 **Documentation**    | Check our comprehensive guides and API docs                                                                        |
+| Resource                | Description                                                                                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| 📖 **Documentation**    | Check our comprehensive guides and API docs                                                                         |
 | 🐛 **Bug Reports**      | [Create an issue](https://github.com/PreciousNwogu/study-abroad-assistant/issues/new?template=bug_report.md)        |
 | 💡 **Feature Requests** | [Request a feature](https://github.com/PreciousNwogu/study-abroad-assistant/issues/new?template=feature_request.md) |
 | 💬 **Discussions**      | [Join the conversation](https://github.com/PreciousNwogu/study-abroad-assistant/discussions)                        |
-| 📧 **Email Setup Help** | See [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)                                                                   |
+| 📧 **Email Setup Help** | See [NODEMAILER_SETUP.md](./NODEMAILER_SETUP.md)                                                                    |
 
 ### Roadmap
 
