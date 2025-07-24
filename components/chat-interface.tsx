@@ -116,7 +116,7 @@ export function ChatInterface() {
       initializedRef.current = true;
       addMessage(
         "assistant",
-        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant for **Canada & UK** 🎓\n\n🆓 **Free Service**: I'll help you find universities in Canada or UK that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
+        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant 🎓\n\n🆓 **Free Service**: I'll help you find universities worldwide that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
         "greeting",
         <CountrySelector onSelect={handleCountrySelect} />
       );
@@ -256,7 +256,15 @@ export function ChatInterface() {
             completeUserData.country
           } university list:`,
           "email_capture",
-          <EmailCapture onSubmit={handleEmailSubmit} />
+          <EmailCapture 
+            onSubmit={handleEmailSubmit} 
+            userPreferences={{
+              country: completeUserData.country,
+              course: completeUserData.course,
+              level: completeUserData.level,
+              budget: budget
+            }}
+          />
         );
       }, 1000);
     } catch (error) {

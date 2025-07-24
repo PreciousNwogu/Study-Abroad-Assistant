@@ -10,7 +10,7 @@ export function Footer() {
             </h3>
             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
               Your AI-powered study abroad assistant helping students achieve
-              their dreams in Canada & UK.
+              their global education dreams.
             </p>
           </div>
 
@@ -45,7 +45,7 @@ export function Footer() {
         <div className="border-t border-gray-700 mt-6 sm:mt-8 pt-4 sm:pt-6 text-center">
           <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
             © 2025 Study Smart AI. All rights reserved. Made with ❤️ for
-            students pursuing education in Canada & UK.
+            international students.
           </p>
         </div>
       </div>

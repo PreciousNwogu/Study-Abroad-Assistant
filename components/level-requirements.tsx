@@ -312,7 +312,7 @@ export function LevelRequirements({
                     variant="outline"
                   >
                     <Plane className="h-4 w-4 mr-2" />
-                    Immigration SOP - $179
+                    Immigration SOP - $149
                   </Button>
                 </div>
                 <div className="text-xs text-gray-500">
@@ -371,9 +371,9 @@ export function LevelRequirements({
                     </p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm text-gray-500 line-through">$627</p>
-                    <p className="text-2xl font-bold text-green-600">$499</p>
-                    <p className="text-xs text-green-600">Save $128</p>
+                    <p className="text-sm text-gray-500 line-through">$747</p>
+                    <p className="text-2xl font-bold text-green-600">$599</p>
+                    <p className="text-xs text-green-600">Save $148</p>
                   </div>
                 </div>
                 <Button className="w-full bg-green-600 hover:bg-green-700">

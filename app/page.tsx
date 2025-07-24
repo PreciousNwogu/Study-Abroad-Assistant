@@ -99,7 +99,7 @@ export default function HomePage() {
                   Study Abroad Assistant 🎓
                 </h1>
                 <p className="text-lg sm:text-xl text-gray-600">
-                  Level-Specific Guidance for Canada & UK
+                  Level-Specific Guidance for Global Education
                 </p>
               </div>
             </div>

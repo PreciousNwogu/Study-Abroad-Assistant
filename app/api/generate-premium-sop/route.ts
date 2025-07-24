@@ -1,5 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
+import { 
+  assignToAgent, 
+  createSOPRequest, 
+  addSOPRequest, 
+  updateSOPRequestStatus, 
+  getAgentById 
+} from "@/lib/agent-assignment";
+import { sendAgentAssignment, sendClientConfirmationEmail } from "@/lib/email-service";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -7,6 +15,7 @@ const openai = new OpenAI({
 
 interface SOPFormData {
   fullName: string;
+  email?: string; // Add email field
   currentEducation: string;
   gpa: string;
   universityName: string;
@@ -198,6 +207,60 @@ Provide this as professional consultation that demonstrates deep expertise in ac
     });
 
     const feedback = feedbackCompletion.choices[0]?.message?.content;
+
+    // Create SOP request and assign to agent
+    try {
+      const clientData = {
+        email: sopData.email || sopData.fullName.toLowerCase().replace(/\s+/g, '.') + '@example.com',
+        name: sopData.fullName,
+        country: sopData.targetCountry,
+        serviceType: "admission" as const
+      };
+
+      const sopRequest = createSOPRequest(clientData, 149);
+      
+      if (sopRequest) {
+        // Add request to database
+        addSOPRequest(sopRequest);
+
+        // Get the assigned agent for email notification
+        const assignedAgent = assignToAgent("admission", sopData.targetCountry);
+        if (assignedAgent) {
+          // Send agent assignment email
+          await sendAgentAssignment(
+            assignedAgent.email,
+            assignedAgent.name,
+            {
+              name: sopData.fullName,
+              email: clientData.email,
+              targetProgram: sopData.targetProgram,
+              targetUniversity: sopData.targetUniversity,
+              targetCountry: sopData.targetCountry
+            },
+            sop,
+            sopRequest.id
+          );
+
+          // Send client confirmation email
+          await sendClientConfirmationEmail({
+            to: clientData.email,
+            clientName: sopData.fullName,
+            agentName: assignedAgent.name,
+            agentSpecialty: assignedAgent.specialty,
+            serviceType: "admission",
+            country: sopData.targetCountry,
+            urgency: "standard",
+            requestId: sopRequest.id,
+            estimatedDelivery: "7-10 business days"
+          });
+        }
+
+        console.log(`SOP request assigned to agent: ${assignedAgent?.name || 'No agent available'}`);
+      }
+    } catch (agentError) {
+      console.error('Error in agent assignment process:', agentError);
+      // Continue with response even if agent assignment fails
+    }
 
     return NextResponse.json({
       success: true,
