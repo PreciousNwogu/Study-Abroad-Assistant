@@ -116,7 +116,7 @@ export function ChatInterface() {
       initializedRef.current = true;
       addMessage(
         "assistant",
-        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant 🎓\n\n🆓 **Free Service**: I'll help you find universities that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
+        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant for **Canada & UK** 🎓\n\n🆓 **Free Service**: I'll help you find universities in Canada or UK that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
         "greeting",
         <CountrySelector onSelect={handleCountrySelect} />
       );
@@ -236,15 +236,25 @@ export function ChatInterface() {
       addMessage("assistant", data.recommendations, "recommendations");
 
       setTimeout(() => {
-        // Use fallback for missing values
-        const country = completeUserData.country ? getCountryWithFlag(completeUserData.country) : 'Not specified';
-        const course = completeUserData.course || 'Not specified';
-        const level = completeUserData.level || 'Not specified';
-        const budgetValue = completeUserData.budget || 'Not specified';
-
         addMessage(
           "assistant",
-          `🎯 **Your ${country} University List is Ready!**\n\nBased on your preferences:\n• **Country**: ${country}\n• **Course**: ${course}\n• **Level**: ${level}\n• **Budget**: ${budgetValue}\n\n📧 **Get your ${country} university list:**\nI'll send you a curated list of ${country} universities that match your criteria:\n• University names and locations within ${country}\n• Programs available in ${course}\n• Tuition fees within your ${budgetValue} budget\n• Contact details for direct inquiry\n\nEnter your email to receive your personalized ${country} university list:`,
+          `🎯 **Your ${
+            completeUserData.country
+          } University List is Ready!**\n\nBased on your preferences:\n• **Country**: ${getCountryWithFlag(
+            completeUserData.country
+          )}\n• **Course**: ${completeUserData.course}\n• **Level**: ${
+            completeUserData.level
+          }\n• **Budget**: ${budget}\n\n📧 **Get your ${
+            completeUserData.country
+          } university list:**\nI'll send you a curated list of ${
+            completeUserData.country
+          } universities that match your criteria:\n• University names and locations within ${
+            completeUserData.country
+          }\n• Programs available in ${
+            completeUserData.course
+          }\n• Tuition fees within your ${budget} budget\n• Contact details for direct inquiry\n\nEnter your email to receive your personalized ${
+            completeUserData.country
+          } university list:`,
           "email_capture",
           <EmailCapture onSubmit={handleEmailSubmit} />
         );
@@ -290,29 +300,7 @@ export function ChatInterface() {
       if (data.success) {
         addMessage(
           "assistant",
-          `✅ **${
-            completeUserData.country
-          } University List Sent Successfully!**\n\n📧 **Sent to**: ${email}\n\n📋 **Your ${
-            completeUserData.country
-          } university package includes:**\n• ${
-            completeUserData.country
-          } university names and locations\n• Programs available in ${
-            completeUserData.course
-          }\n• Tuition fees within your ${
-            completeUserData.budget
-          } budget range\n• University contact details for direct inquiry\n• Application requirements overview\n• Downloadable PDF with detailed information\n\n📋 **Your Selection Summary:**\n• **Country**: ${getCountryWithFlag(
-            completeUserData.country
-          )}\n• **Course**: ${completeUserData.course}\n• **Level**: ${
-            completeUserData.level
-          }\n• **Budget**: ${
-            completeUserData.budget
-          }\n\n📥 **Check your inbox** (and spam folder)!\n\n🚀 **Ready to take the next step?**\n\nOur **Premium Service** offers much more:\n\n💎 **Professional SOP Writing ($149)**\n• Tailored for ${
-            completeUserData.country
-          } universities\n• Expert knowledge of ${
-            completeUserData.country
-          } admission requirements\n• University-specific strategy\n• 3-day delivery with revisions\n\nInterested in upgrading to our premium SOP service for your ${
-            completeUserData.country
-          } applications?`,
+          `✅ **${completeUserData.country} University List Sent Successfully!**\n\n📧 **Sent to**: ${email}\n\n📋 **Your ${completeUserData.country} university package includes:**\n• ${completeUserData.country} university names and locations\n• Programs available in ${completeUserData.course}\n• Tuition fees within your ${completeUserData.budget} budget range\n• University contact details for direct inquiry\n• Application requirements overview\n• Downloadable PDF with detailed information\n\n📋 **Your Selection Summary:**\n• **Country**: ${getCountryWithFlag(completeUserData.country)}\n• **Course**: ${completeUserData.course}\n• **Level**: ${completeUserData.level}\n• **Budget**: ${completeUserData.budget}\n\n📥 **Check your inbox** (and spam folder)!\n\n🚀 **Ready to take the next step?**\n\nOur **Premium Service** offers much more:\n\n💎 **Professional SOP Writing ($149)**\n• Tailored for ${completeUserData.country} universities\n• Expert knowledge of ${completeUserData.country} admission requirements\n• University-specific strategy\n• 3-day delivery with revisions\n\nInterested in upgrading to our premium SOP service for your ${completeUserData.country} applications?`,
           "sop_offer",
           <ProfessionalSOPOffer />
         );
@@ -345,9 +333,6 @@ export function ChatInterface() {
         <PaymentComponent
           onPaymentSuccess={handlePaymentSuccess}
           onPaymentCancel={() => setCurrentStep("sop_offer")}
-          amount={149}
-          urgency="standard"
-          deliveryFormat="pdf"
         />
       );
     } else {
@@ -690,8 +675,10 @@ export function ChatInterface() {
   );
 
   return (
-    <div className="h-full flex flex-col">
-      <div className="flex-1 overflow-y-auto p-2 sm:p-4 space-y-3 sm:space-y-4">
+    <Card className="h-[550px] flex flex-col">
+      {" "}
+      {/* Reduced height to prevent footer overlap */}
+      <div className="flex-1 overflow-y-auto p-4 space-y-4">
         <ProgressIndicator currentStep={currentStep} />
         {messages.map((message) => (
           <div
@@ -701,35 +688,33 @@ export function ChatInterface() {
             }`}
           >
             <div
-              className={`flex items-start space-x-2 max-w-[85%] sm:max-w-[80%] ${
+              className={`flex items-start space-x-2 max-w-[80%] ${
                 message.role === "user"
                   ? "flex-row-reverse space-x-reverse"
                   : ""
               }`}
             >
               <div
-                className={`flex-shrink-0 w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center ${
+                className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center ${
                   message.role === "user" ? "bg-blue-600" : "bg-gray-600"
                 }`}
               >
                 {message.role === "user" ? (
-                  <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                  <User className="w-4 h-4 text-white" />
                 ) : (
-                  <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+                  <Bot className="w-4 h-4 text-white" />
                 )}
               </div>
               <div
-                className={`rounded-lg p-2 sm:p-3 ${
+                className={`rounded-lg p-3 ${
                   message.role === "user"
                     ? "bg-blue-600 text-white"
                     : "bg-gray-100 text-gray-900"
                 }`}
               >
-                <div className="whitespace-pre-wrap text-sm sm:text-base leading-relaxed">
-                  {message.content}
-                </div>
+                <div className="whitespace-pre-wrap">{message.content}</div>
                 {message.component && (
-                  <div className="mt-2 sm:mt-3">{message.component}</div>
+                  <div className="mt-3">{message.component}</div>
                 )}
               </div>
             </div>
@@ -738,17 +723,22 @@ export function ChatInterface() {
         {isLoading && (
           <div className="flex justify-start">
             <div className="flex items-center space-x-2">
-              <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gray-600 flex items-center justify-center">
-                <Bot className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
+              <div className="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
               </div>
-              <div className="bg-gray-100 rounded-lg p-2 sm:p-3">
+              <div className="bg-gray-100 rounded-lg p-3">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
                   <div
+                    key="dot-1"
+                    className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
+                  ></div>
+                  <div
+                    key="dot-2"
                     className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.1s" }}
                   ></div>
                   <div
+                    key="dot-3"
                     className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"
                     style={{ animationDelay: "0.2s" }}
                   ></div>
@@ -759,6 +749,6 @@ export function ChatInterface() {
         )}
         <div ref={messagesEndRef} />
       </div>
-    </div>
+    </Card>
   );
 }
