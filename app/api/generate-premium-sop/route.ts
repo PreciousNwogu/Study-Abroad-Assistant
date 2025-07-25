@@ -9,10 +9,6 @@ import {
 } from "@/lib/agent-assignment";
 import { sendAgentAssignment, sendClientConfirmationEmail } from "@/lib/email-service";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 interface SOPFormData {
   fullName: string;
   email?: string; // Add email field
@@ -46,6 +42,11 @@ interface SOPFormData {
 
 export async function POST(request: NextRequest) {
   try {
+    // Initialize OpenAI client inside the function to avoid build-time errors
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const sopData: SOPFormData = await request.json();
 
     // Create a comprehensive prompt for premium SOP generation
