@@ -98,9 +98,6 @@ export default function HomePage() {
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-2">
                   Study Abroad Assistant 🎓
                 </h1>
-                <p className="text-lg sm:text-xl text-gray-600">
-                  Level-Specific Guidance for Canada & UK
-                </p>
               </div>
             </div>
             <p className="text-base sm:text-lg text-gray-500 max-w-3xl mx-auto mb-6 sm:mb-8 px-4">

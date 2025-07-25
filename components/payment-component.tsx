@@ -49,17 +49,67 @@ export function PaymentComponent({
     e.preventDefault();
     setIsProcessing(true);
 
-    // Simulate payment processing
-    setTimeout(() => {
+    try {
+      // Simulate payment processing
+      const transactionId = `txn_${Date.now()}_${Math.random()
+        .toString(36)
+        .substr(2, 6)}`;
+
+      // In a real implementation, this would call Stripe/PayPal
+      const paymentResult = await simulatePaymentProcessing();
+
+      if (paymentResult.success) {
+        // Record payment and send notifications
+        const orderResult = await fetch("/api/process-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            amount: amount,
+            currency: "USD",
+            service: getServiceName(),
+            urgency: urgency,
+            deliveryFormat: deliveryFormat,
+            customerEmail: formData.email,
+            customerName: formData.cardName,
+            paymentMethod: paymentMethod,
+            transactionId: transactionId,
+          }),
+        });
+
+        const orderData = await orderResult.json();
+
+        setIsProcessing(false);
+        onPaymentSuccess({
+          amount: amount,
+          currency: "USD",
+          paymentMethod: paymentMethod,
+          transactionId: transactionId,
+          orderId: orderData.orderId,
+          timestamp: new Date().toISOString(),
+        });
+      } else {
+        throw new Error("Payment failed");
+      }
+    } catch (error) {
       setIsProcessing(false);
-      onPaymentSuccess({
-        amount: amount,
-        currency: "USD",
-        paymentMethod: paymentMethod,
-        transactionId: `txn_${Date.now()}`,
-        timestamp: new Date().toISOString(),
-      });
-    }, 3000);
+      console.error("Payment error:", error);
+      // Handle payment error
+      alert("Payment failed. Please try again.");
+    }
+  };
+
+  const simulatePaymentProcessing = async (): Promise<{ success: boolean }> => {
+    // Simulate network delay
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+
+    // Simulate 95% success rate
+    const success = Math.random() > 0.05;
+    return { success };
+  };
+
+  const getServiceName = () => {
+    // This would be passed as props in a real implementation
+    return "Professional SOP Writing";
   };
 
   const handleInputChange = (field: string, value: string) => {

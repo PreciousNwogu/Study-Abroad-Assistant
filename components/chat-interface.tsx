@@ -116,7 +116,7 @@ export function ChatInterface() {
       initializedRef.current = true;
       addMessage(
         "assistant",
-        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant for **Canada & UK** 🎓\n\n🆓 **Free Service**: I'll help you find universities in Canada or UK that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
+        "👋 Hi there! Welcome to *Study Abroad Assistant* — your AI-powered study abroad consultant 🎓\n\n🆓 **Free Service**: I'll help you find universities that match your course and budget preferences, then send you a basic university list via email.\n\n💎 **Premium Services**: For detailed admission requirements, scholarship opportunities, and professional SOP writing specifically for Canada & UK applications, check out our paid packages!\n\nLet's start with the basics - would you like to study in Canada or UK?",
         "greeting",
         <CountrySelector onSelect={handleCountrySelect} />
       );
@@ -236,25 +236,15 @@ export function ChatInterface() {
       addMessage("assistant", data.recommendations, "recommendations");
 
       setTimeout(() => {
+        // Use fallback for missing values
+        const country = completeUserData.country ? getCountryWithFlag(completeUserData.country) : 'Not specified';
+        const course = completeUserData.course || 'Not specified';
+        const level = completeUserData.level || 'Not specified';
+        const budgetValue = completeUserData.budget || 'Not specified';
+
         addMessage(
           "assistant",
-          `🎯 **Your ${
-            completeUserData.country
-          } University List is Ready!**\n\nBased on your preferences:\n• **Country**: ${getCountryWithFlag(
-            completeUserData.country
-          )}\n• **Course**: ${completeUserData.course}\n• **Level**: ${
-            completeUserData.level
-          }\n• **Budget**: ${budget}\n\n📧 **Get your ${
-            completeUserData.country
-          } university list:**\nI'll send you a curated list of ${
-            completeUserData.country
-          } universities that match your criteria:\n• University names and locations within ${
-            completeUserData.country
-          }\n• Programs available in ${
-            completeUserData.course
-          }\n• Tuition fees within your ${budget} budget\n• Contact details for direct inquiry\n\nEnter your email to receive your personalized ${
-            completeUserData.country
-          } university list:`,
+          `🎯 **Your ${country} University List is Ready!**\n\nBased on your preferences:\n• **Country**: ${country}\n• **Course**: ${course}\n• **Level**: ${level}\n• **Budget**: ${budgetValue}\n\n📧 **Get your ${country} university list:**\nI'll send you a curated list of ${country} universities that match your criteria:\n• University names and locations within ${country}\n• Programs available in ${course}\n• Tuition fees within your ${budgetValue} budget\n• Contact details for direct inquiry\n\nEnter your email to receive your personalized ${country} university list:`,
           "email_capture",
           <EmailCapture onSubmit={handleEmailSubmit} />
         );

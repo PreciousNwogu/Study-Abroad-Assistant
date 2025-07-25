@@ -10,7 +10,7 @@ export function Footer() {
             </h3>
             <p className="text-gray-400 leading-relaxed text-sm sm:text-base">
               Your AI-powered study abroad assistant helping students achieve
-              their dreams in Canada & UK.
+              their international education dreams.
             </p>
           </div>
 
@@ -36,16 +36,26 @@ export function Footer() {
               <p className="break-all sm:break-normal">
                 📧 studyabroadasistant@gmail.com
               </p>
-              <p>📱 +1 (555) 123-4567</p>
-              <p>🌐 www.studysmartai.com</p>
+              <p>
+                📱 <span className="text-gray-500 italic">WhatsApp support coming soon</span>
+              </p>
+              <p>
+                🌐 <a
+                  href="https://www.studysmartai.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="underline hover:text-white transition-colors"
+                >
+                  www.studysmartai.com
+                </a>
+              </p>
             </div>
           </div>
         </div>
 
         <div className="border-t border-gray-700 mt-6 sm:mt-8 pt-4 sm:pt-6 text-center">
           <p className="text-gray-400 text-xs sm:text-sm leading-relaxed">
-            © 2025 Study Smart AI. All rights reserved. Made with ❤️ for
-            students pursuing education in Canada & UK.
+            © 2025 Study Smart AI. All rights reserved. Dedicated to supporting students in achieving their international education goals.
           </p>
         </div>
       </div>

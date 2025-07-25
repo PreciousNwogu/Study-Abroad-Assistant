@@ -33,9 +33,7 @@ const createTransporter = () => {
   }
 
   return nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false, // true for 465, false for other ports
+    service: "gmail",
     auth: {
       user: emailUser,
       pass: emailPass, // This should be an App Password, not your regular Gmail password
@@ -43,97 +41,145 @@ const createTransporter = () => {
     tls: {
       rejectUnauthorized: false,
     },
-    debug: true, // Enable debug mode
-    logger: true, // Enable logging
+    connectionTimeout: 60000, // 60 seconds
+    greetingTimeout: 30000, // 30 seconds
+    socketTimeout: 60000, // 60 seconds
+    pool: true, // use connection pooling
+    maxConnections: 5, // max simultaneous connections
+    rateDelta: 1000, // throttling - 1 second between messages
+    rateLimit: 5, // max 5 messages per second
   });
 };
 
 export async function sendEmail(emailData: EmailData): Promise<EmailResult> {
   const timestamp = new Date().toISOString();
+  const maxRetries = 3;
+  let lastError: Error | null = null;
 
-  try {
-    console.log("📧 Attempting to send email to:", emailData.to);
-    console.log("📋 Subject:", emailData.subject);
-    console.log("📎 Attachments:", emailData.attachments?.length || 0);
+  for (let attempt = 1; attempt <= maxRetries; attempt++) {
+    try {
+      console.log(
+        `📧 Attempting to send email to: ${emailData.to} (Attempt ${attempt}/${maxRetries})`
+      );
+      console.log("📋 Subject:", emailData.subject);
+      console.log("📎 Attachments:", emailData.attachments?.length || 0);
 
-    const transporter = createTransporter();
+      const transporter = createTransporter();
 
-    if (!transporter) {
-      // Fallback: Log email content to console if no credentials
-      console.log("📧 EMAIL CONTENT (No SMTP configured):");
-      console.log("To:", emailData.to);
-      console.log("Subject:", emailData.subject);
-      console.log("HTML Length:", emailData.html.length, "characters");
-      console.log("Attachments:", emailData.attachments?.length || 0);
+      if (!transporter) {
+        // Fallback: Log email content to console if no credentials
+        console.log("📧 EMAIL CONTENT (No SMTP configured):");
+        console.log("To:", emailData.to);
+        console.log("Subject:", emailData.subject);
+        console.log("HTML Length:", emailData.html.length, "characters");
+        console.log("Attachments:", emailData.attachments?.length || 0);
+
+        return {
+          success: true,
+          message: `Email logged to console (SMTP not configured) for ${emailData.to}`,
+          timestamp,
+        };
+      }
+
+      // Test connection on first attempt
+      if (attempt === 1) {
+        console.log("🔍 Testing SMTP connection...");
+        await transporter.verify();
+        console.log("✅ SMTP connection verified");
+      }
+
+      // Prepare mail options
+      const mailOptions = {
+        from: process.env.EMAIL_USER,
+        to: emailData.to,
+        subject: emailData.subject,
+        html: emailData.html,
+        attachments: emailData.attachments?.map((att) => ({
+          filename: att.filename,
+          content: att.content,
+          contentType: att.contentType,
+        })),
+      };
+
+      // Send email
+      const info = await transporter.sendMail(mailOptions);
+
+      console.log("✅ Email sent successfully!");
+      console.log("📧 Message ID:", info.messageId);
+      console.log("📬 Accepted:", info.accepted);
+      console.log("❌ Rejected:", info.rejected);
 
       return {
         success: true,
-        message: `Email logged to console (SMTP not configured) for ${emailData.to}`,
+        message: `Email sent successfully to ${emailData.to}`,
         timestamp,
+        messageId: info.messageId,
       };
-    }
+    } catch (error) {
+      lastError = error as Error;
+      console.error(
+        `❌ Failed to send email (Attempt ${attempt}/${maxRetries}):`,
+        error
+      );
 
-    // Prepare mail options
-    const mailOptions = {
-      from: process.env.EMAIL_USER,
-      to: emailData.to,
-      subject: emailData.subject,
-      html: emailData.html,
-      attachments: emailData.attachments?.map((att) => ({
-        filename: att.filename,
-        content: att.content,
-        contentType: att.contentType,
-      })),
-    };
+      // Don't retry on certain errors
+      if (error instanceof Error) {
+        if (
+          error.message.includes("Invalid login") ||
+          error.message.includes("530") ||
+          error.message.includes("535")
+        ) {
+          console.error("🚫 Authentication error - not retrying");
+          break;
+        }
+      }
 
-    // Send email
-    const info = await transporter.sendMail(mailOptions);
-
-    console.log("✅ Email sent successfully!");
-    console.log("📧 Message ID:", info.messageId);
-    console.log("📬 Accepted:", info.accepted);
-    console.log("❌ Rejected:", info.rejected);
-
-    return {
-      success: true,
-      message: `Email sent successfully to ${emailData.to}`,
-      timestamp,
-      messageId: info.messageId,
-    };
-  } catch (error) {
-    console.error("❌ Failed to send email:", error);
-
-    // Provide specific error messages for common issues
-    let errorMessage = "Unknown error";
-    if (error instanceof Error) {
-      errorMessage = error.message;
-
-      // Check for specific error patterns
-      if (error.message.includes("ECONNREFUSED")) {
-        errorMessage =
-          "Connection refused - Check your internet connection and Gmail SMTP settings";
-      } else if (error.message.includes("Invalid login")) {
-        errorMessage =
-          "Invalid credentials - Please check your Gmail address and App Password";
-      } else if (error.message.includes("530")) {
-        errorMessage =
-          "Authentication required - Ensure 2-Step Verification is enabled and you are using an App Password";
+      // Wait before retry (except on last attempt)
+      if (attempt < maxRetries) {
+        const delay = Math.pow(2, attempt) * 1000; // Exponential backoff
+        console.log(`⏳ Waiting ${delay}ms before retry...`);
+        await new Promise((resolve) => setTimeout(resolve, delay));
       }
     }
-
-    console.error("🔍 Detailed error:", {
-      message: errorMessage,
-      code: (error as any)?.code,
-      command: (error as any)?.command,
-      response: (error as any)?.response,
-    });
-
-    return {
-      success: false,
-      message: `Failed to send email: ${errorMessage}`,
-      timestamp,
-    };
   }
+
+  // All attempts failed
+  const error = lastError as Error;
+  console.error("🔍 All email attempts failed. Final error:", error);
+
+  // Provide specific error messages for common issues
+  let errorMessage = "Unknown error";
+  if (error) {
+    errorMessage = error.message;
+
+    // Check for specific error patterns
+    if (error.message.includes("ECONNREFUSED")) {
+      errorMessage =
+        "Connection refused - Check your internet connection and Gmail SMTP settings";
+    } else if (error.message.includes("Invalid login")) {
+      errorMessage =
+        "Invalid credentials - Please check your Gmail address and App Password";
+    } else if (error.message.includes("530")) {
+      errorMessage =
+        "Authentication required - Ensure 2-Step Verification is enabled and you are using an App Password";
+    } else if (error.message.includes("ETIMEDOUT")) {
+      errorMessage =
+        "Connection timeout - Network or firewall may be blocking SMTP connections";
+    }
+  }
+
+  console.error("🔍 Detailed error:", {
+    message: errorMessage,
+    code: (error as any)?.code,
+    command: (error as any)?.command,
+    response: (error as any)?.response,
+  });
+
+  return {
+    success: false,
+    message: `Failed to send email: ${errorMessage}`,
+    timestamp,
+  };
 }
 
 // Test email configuration
