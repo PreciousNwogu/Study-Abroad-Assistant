@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import type { Viewport } from "next";
 import "./globals.css";
+import { AnalyticsTracker } from "../components/analytics-tracker";
 
 export const metadata: Metadata = {
   title: "Study Abroad Assistant - AI-Powered University Recommendations",
@@ -37,6 +38,7 @@ export default function RootLayout({
         <meta name="format-detection" content="telephone=no" />
       </head>
       <body className="min-h-screen bg-background font-sans antialiased">
+        <AnalyticsTracker />
         <div className="relative flex min-h-screen flex-col">
           <div className="flex-1">{children}</div>
         </div>
