@@ -3,10 +3,10 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     // Test that the API is working
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: "Analytics API is working!",
       timestamp: new Date().toISOString(),
-      status: "healthy" 
+      status: "healthy",
     });
   } catch (error) {
     console.error("Test API error:", error);

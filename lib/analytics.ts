@@ -58,9 +58,18 @@ function generateId(): string {
 function getCountryFromIP(ip?: string): string {
   // Mock country detection - in production use ipapi.co or similar
   const countries = [
-    'United States', 'United Kingdom', 'Canada', 'Australia', 
-    'Germany', 'France', 'Netherlands', 'Singapore', 'Nigeria',
-    'South Africa', 'India', 'Brazil'
+    "United States",
+    "United Kingdom",
+    "Canada",
+    "Australia",
+    "Germany",
+    "France",
+    "Netherlands",
+    "Singapore",
+    "Nigeria",
+    "South Africa",
+    "India",
+    "Brazil",
   ];
   return countries[Math.floor(Math.random() * countries.length)];
 }
@@ -166,21 +175,33 @@ export class AnalyticsService {
     const lastHour = new Date(now.getTime() - 60 * 60 * 1000);
 
     // Filter recent data
-    const recentPageViews = analytics.pageViews.filter(pv => pv.timestamp >= last24Hours);
-    const recentSessions = Array.from(analytics.sessions.values()).filter(s => s.lastActivity >= last24Hours);
-    const recentApiCalls = analytics.apiCalls.filter(call => call.timestamp >= last24Hours);
-    const recentErrors = analytics.errors.filter(err => err.timestamp >= last24Hours);
+    const recentPageViews = analytics.pageViews.filter(
+      (pv) => pv.timestamp >= last24Hours
+    );
+    const recentSessions = Array.from(analytics.sessions.values()).filter(
+      (s) => s.lastActivity >= last24Hours
+    );
+    const recentApiCalls = analytics.apiCalls.filter(
+      (call) => call.timestamp >= last24Hours
+    );
+    const recentErrors = analytics.errors.filter(
+      (err) => err.timestamp >= last24Hours
+    );
 
     // 🧍‍♀️ Total visitors (unique sessions)
     const totalVisitors = recentSessions.length;
 
     // ⌛ Average session time (engagement metric)
-    const avgSessionTime = recentSessions.length > 0 
-      ? recentSessions.reduce((sum, session) => {
-          const duration = (session.lastActivity.getTime() - session.startTime.getTime()) / 1000 / 60;
-          return sum + Math.max(duration, 0);
-        }, 0) / recentSessions.length
-      : 0;
+    const avgSessionTime =
+      recentSessions.length > 0
+        ? recentSessions.reduce((sum, session) => {
+            const duration =
+              (session.lastActivity.getTime() - session.startTime.getTime()) /
+              1000 /
+              60;
+            return sum + Math.max(duration, 0);
+          }, 0) / recentSessions.length
+        : 0;
 
     // 🌎 Top countries (localization insights)
     const countryStats = recentPageViews.reduce((acc, pv) => {
@@ -191,7 +212,7 @@ export class AnalyticsService {
     }, {} as Record<string, number>);
 
     const topCountries = Object.entries(countryStats)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 5)
       .map(([country, count]) => ({ country, count }));
 
@@ -206,8 +227,10 @@ export class AnalyticsService {
     const errorCount = recentErrors.length;
 
     // 📈 Traffic spikes (marketing success)
-    const trafficLastHour = analytics.pageViews.filter(pv => pv.timestamp >= lastHour).length;
-    const isTrafficSpike = trafficLastHour > (recentPageViews.length / 24); // Above hourly average
+    const trafficLastHour = analytics.pageViews.filter(
+      (pv) => pv.timestamp >= lastHour
+    ).length;
+    const isTrafficSpike = trafficLastHour > recentPageViews.length / 24; // Above hourly average
 
     // Top pages
     const pageStats = recentPageViews.reduce((acc, pv) => {
@@ -216,7 +239,7 @@ export class AnalyticsService {
     }, {} as Record<string, number>);
 
     const topPages = Object.entries(pageStats)
-      .sort(([,a], [,b]) => b - a)
+      .sort(([, a], [, b]) => b - a)
       .slice(0, 5)
       .map(([page, count]) => ({ page, count }));
 
@@ -229,21 +252,22 @@ export class AnalyticsService {
       errorCount,
       isTrafficSpike,
       trafficLastHour,
-      
+
       // Additional useful data
       pageViews: recentPageViews.length,
       topPages,
       topApiEndpoints: Object.entries(topApiEndpoints)
-        .sort(([,a], [,b]) => b - a)
+        .sort(([, a], [, b]) => b - a)
         .slice(0, 3)
         .map(([endpoint, count]) => ({ endpoint, count })),
-      
+
       // Recent activity for real-time feeling
       recentActivity: {
         lastHour: trafficLastHour,
         errors: recentErrors.length,
-        apiCalls: recentApiCalls.filter(call => call.timestamp >= lastHour).length,
-      }
+        apiCalls: recentApiCalls.filter((call) => call.timestamp >= lastHour)
+          .length,
+      },
     };
   }
 
@@ -251,15 +275,16 @@ export class AnalyticsService {
   static getRealtimeStats() {
     const now = new Date();
     const last5Minutes = new Date(now.getTime() - 5 * 60 * 1000);
-    
-    const activeSessions = Array.from(analytics.sessions.values())
-      .filter(s => s.lastActivity >= last5Minutes);
-    
+
+    const activeSessions = Array.from(analytics.sessions.values()).filter(
+      (s) => s.lastActivity >= last5Minutes
+    );
+
     const recentActivity = analytics.pageViews
-      .filter(pv => pv.timestamp >= last5Minutes)
+      .filter((pv) => pv.timestamp >= last5Minutes)
       .sort((a, b) => b.timestamp.getTime() - a.timestamp.getTime())
       .slice(0, 5)
-      .map(pv => ({
+      .map((pv) => ({
         page: pv.page,
         country: pv.country,
         timestamp: pv.timestamp.toISOString(),
@@ -275,11 +300,17 @@ export class AnalyticsService {
   // Cleanup old data (call this periodically)
   static cleanup() {
     const cutoff = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000); // 7 days
-    
-    analytics.pageViews = analytics.pageViews.filter(pv => pv.timestamp >= cutoff);
-    analytics.apiCalls = analytics.apiCalls.filter(call => call.timestamp >= cutoff);
-    analytics.errors = analytics.errors.filter(err => err.timestamp >= cutoff);
-    
+
+    analytics.pageViews = analytics.pageViews.filter(
+      (pv) => pv.timestamp >= cutoff
+    );
+    analytics.apiCalls = analytics.apiCalls.filter(
+      (call) => call.timestamp >= cutoff
+    );
+    analytics.errors = analytics.errors.filter(
+      (err) => err.timestamp >= cutoff
+    );
+
     for (const [sessionId, session] of analytics.sessions.entries()) {
       if (session.lastActivity < cutoff) {
         analytics.sessions.delete(sessionId);

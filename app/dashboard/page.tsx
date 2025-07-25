@@ -30,14 +30,18 @@ export default function AnalyticsDashboard() {
       console.log("🔄 Fetching analytics data...");
       const response = await fetch("/api/analytics/stats");
       console.log("📡 Response status:", response.status);
-      
+
       if (response.ok) {
         const result = await response.json();
         console.log("✅ Data received:", result);
         setData(result);
         setLastUpdated(new Date());
       } else {
-        console.error("❌ Response not OK:", response.status, response.statusText);
+        console.error(
+          "❌ Response not OK:",
+          response.status,
+          response.statusText
+        );
         const errorText = await response.text();
         console.error("❌ Error response:", errorText);
       }
@@ -50,7 +54,7 @@ export default function AnalyticsDashboard() {
 
   useEffect(() => {
     fetchData();
-    
+
     // Auto-refresh every 30 seconds
     const interval = setInterval(fetchData, 30000);
     return () => clearInterval(interval);
@@ -87,10 +91,15 @@ export default function AnalyticsDashboard() {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">📊 Analytics Dashboard</h1>
-          <p className="text-gray-600 mb-2">Study Abroad Assistant - Real-time Insights</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">
+            📊 Analytics Dashboard
+          </h1>
+          <p className="text-gray-600 mb-2">
+            Study Abroad Assistant - Real-time Insights
+          </p>
           <p className="text-sm text-gray-500">
-            Last updated: {lastUpdated.toLocaleTimeString()} • Auto-refreshes every 30s
+            Last updated: {lastUpdated.toLocaleTimeString()} • Auto-refreshes
+            every 30s
           </p>
         </div>
 
@@ -99,7 +108,9 @@ export default function AnalyticsDashboard() {
           {/* 🧍‍♀️ Total Visitors */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-gray-600">Total Visitors</h3>
+              <h3 className="text-sm font-medium text-gray-600">
+                Total Visitors
+              </h3>
               <span className="text-2xl">🧍‍♀️</span>
             </div>
             <div className="text-3xl font-bold text-blue-600 mb-2">
@@ -114,7 +125,9 @@ export default function AnalyticsDashboard() {
           {/* ⌛ Avg Session Time */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-gray-600">Avg Session Time</h3>
+              <h3 className="text-sm font-medium text-gray-600">
+                Avg Session Time
+              </h3>
               <span className="text-2xl">⌛</span>
             </div>
             <div className="text-3xl font-bold text-purple-600 mb-2">
@@ -147,7 +160,11 @@ export default function AnalyticsDashboard() {
               <h3 className="text-sm font-medium text-gray-600">Error Count</h3>
               <span className="text-2xl">⚠️</span>
             </div>
-            <div className={`text-3xl font-bold mb-2 ${(data?.errorCount ?? 0) > 0 ? 'text-red-600' : 'text-green-600'}`}>
+            <div
+              className={`text-3xl font-bold mb-2 ${
+                (data?.errorCount ?? 0) > 0 ? "text-red-600" : "text-green-600"
+              }`}
+            >
               {data?.errorCount || 0}
             </div>
             <p className="text-xs text-gray-500">Issues detected (24h)</p>
@@ -159,13 +176,19 @@ export default function AnalyticsDashboard() {
           {/* 📈 Traffic Status */}
           <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-sm font-medium text-gray-600">Traffic Status</h3>
+              <h3 className="text-sm font-medium text-gray-600">
+                Traffic Status
+              </h3>
               <span className="text-2xl">📈</span>
             </div>
-            <div className={`text-2xl font-bold mb-2 ${getTrafficStatusColor()}`}>
+            <div
+              className={`text-2xl font-bold mb-2 ${getTrafficStatusColor()}`}
+            >
               {getTrafficStatus()}
             </div>
-            <p className="text-xs text-gray-500">{data?.trafficLastHour || 0} views last hour</p>
+            <p className="text-xs text-gray-500">
+              {data?.trafficLastHour || 0} views last hour
+            </p>
             <div className="mt-2 text-xs text-orange-600 font-medium">
               🎯 Marketing Success
             </div>
@@ -197,14 +220,19 @@ export default function AnalyticsDashboard() {
             {data?.topCountries && data.topCountries.length > 0 ? (
               <div className="space-y-3">
                 {data.topCountries.map((country, index) => (
-                  <div key={country.country} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <div
+                    key={country.country}
+                    className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-medium bg-blue-100 text-blue-800 px-2 py-1 rounded">
                         #{index + 1}
                       </span>
                       <span className="font-medium">{country.country}</span>
                     </div>
-                    <span className="text-sm text-gray-600 font-semibold">{country.count} visitors</span>
+                    <span className="text-sm text-gray-600 font-semibold">
+                      {country.count} visitors
+                    </span>
                   </div>
                 ))}
               </div>
@@ -225,14 +253,19 @@ export default function AnalyticsDashboard() {
             {data?.topPages && data.topPages.length > 0 ? (
               <div className="space-y-3">
                 {data.topPages.map((page, index) => (
-                  <div key={page.page} className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                  <div
+                    key={page.page}
+                    className="flex justify-between items-center p-3 bg-gray-50 rounded-lg"
+                  >
                     <div className="flex items-center gap-3">
                       <span className="text-sm font-medium bg-green-100 text-green-800 px-2 py-1 rounded">
                         #{index + 1}
                       </span>
                       <span className="font-mono text-sm">{page.page}</span>
                     </div>
-                    <span className="text-sm text-gray-600 font-semibold">{page.count} views</span>
+                    <span className="text-sm text-gray-600 font-semibold">
+                      {page.count} views
+                    </span>
                   </div>
                 ))}
               </div>
@@ -250,9 +283,10 @@ export default function AnalyticsDashboard() {
         <div className="mt-8 p-4 bg-gradient-to-r from-blue-50 to-green-50 border border-blue-200 rounded-xl">
           <div className="flex items-center justify-between">
             <p className="text-sm text-blue-700 font-medium">
-              ✅ Analytics Dashboard Active - Tracking your key metrics in real-time
+              ✅ Analytics Dashboard Active - Tracking your key metrics in
+              real-time
             </p>
-            <button 
+            <button
               onClick={fetchData}
               className="text-xs bg-blue-100 hover:bg-blue-200 text-blue-700 px-3 py-1 rounded-full transition-colors"
             >
