@@ -27,14 +27,22 @@ export default function AnalyticsDashboard() {
 
   const fetchData = async () => {
     try {
+      console.log("🔄 Fetching analytics data...");
       const response = await fetch("/api/analytics/stats");
+      console.log("📡 Response status:", response.status);
+      
       if (response.ok) {
         const result = await response.json();
+        console.log("✅ Data received:", result);
         setData(result);
         setLastUpdated(new Date());
+      } else {
+        console.error("❌ Response not OK:", response.status, response.statusText);
+        const errorText = await response.text();
+        console.error("❌ Error response:", errorText);
       }
     } catch (error) {
-      console.error("Failed to fetch analytics data:", error);
+      console.error("❌ Failed to fetch analytics data:", error);
     } finally {
       setLoading(false);
     }
